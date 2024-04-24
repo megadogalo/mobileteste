@@ -3,31 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="styles.css">
-    <title>Rideshare</title>
-    <style>
-        /* Estilos para a janela modal */
-        .modal {
-            display: none;
-            position: fixed;
-            z-index: 1;
-            left: 0;
-            top: 0;
-            width: 100%;
-            height: 100%;
-            overflow: auto;
-            background-color: rgba(0, 0, 0, 0.4);
-        }
-
-        .modal-content {
-            background-color: #fefefe;
-            margin: 15% auto;
-            padding: 20px;
-            border: 1px solid #888;
-            width: 80%;
-            text-align: center;
-        }
-    </style>
+    <title>Abrir Galeria</title>
 </head>
 <body>
     <div class="header">
@@ -36,7 +12,7 @@
     <hr>
     <div class="container">
         <div class="circle" id="circle">
-            <span id="openModal">Clique aqui para escolher</span>
+            <span id="openGallery">Clique aqui para abrir a galeria</span>
         </div>
         <div class="info">
             <h2>Nome</h2>
@@ -77,41 +53,102 @@
         </div>
     </div>
 
-    <!-- Modal -->
-    <div id="myModal" class="modal">
-        <div class="modal-content">
-            <h2>Escolha uma opção</h2>
-            <button id="openGallery">Galeria</button>
-            <button id="openCamera">Câmera</button>
-        </div>
-    </div>
-
     <!-- JavaScript -->
     <script>
-        // Exibe o modal quando o usuário clica no círculo
-        document.getElementById('circle').addEventListener('click', function() {
-            document.getElementById('myModal').style.display = 'block';
-        });
-
-        // Fecha o modal quando o usuário clica em qualquer lugar fora dele
-        window.onclick = function(event) {
-            var modal = document.getElementById('myModal');
-            if (event.target == modal) {
-                modal.style.display = "none";
-            }
-        };
-
-        // Ação ao clicar em "Galeria"
         document.getElementById('openGallery').addEventListener('click', function() {
-            alert("Abrindo galeria..."); // Código para abrir a galeria
-            document.getElementById('myModal').style.display = 'none'; // Fecha o modal
+            document.getElementById('galleryInput').click();
         });
 
-        // Ação ao clicar em "Câmera"
-        document.getElementById('openCamera').addEventListener('click', function() {
-            alert("Abrindo câmera..."); // Código para abrir a câmera
-            document.getElementById('myModal').style.display = 'none'; // Fecha o modal
+        document.getElementById('galleryInput').addEventListener('change', function(event) {
+            var selectedFile = event.target.files[0];
+            if (selectedFile) {
+                var reader = new FileReader();
+                reader.onload = function(event) {
+                    var imgElement = document.createElement('img');
+                    imgElement.src = event.target.result;
+                    document.body.appendChild(imgElement);
+                };
+                reader.readAsDataURL(selectedFile);
+            }
         });
     </script>
+
+    <!-- Estilos -->
+    <style>
+        /* reset de estilinhos */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        /* fonte */
+        @font-face {
+            font-family: 'Poppins-Bold';
+            src: url('Poppins-Bold.ttf') format('truetype');
+            font-weight: bold;
+            font-style: normal;
+        }
+
+        /* estilinho */
+        body {
+            font-family: 'Poppins-Bold', sans-serif;
+            background-color: #ffffff;
+            padding: 20px;
+        }
+
+        .header {
+            text-align: left;
+            margin-bottom: 20px;
+        }
+
+        .title {
+            display: inline-block;
+            margin-right: 10px; 
+        }
+
+        .location-icon {
+            color: #79C61E; 
+            font-size: 15px;
+            vertical-align: middle; 
+        }
+
+        .circle {
+            width: 100px;
+            height: 100px;
+            background-color: #d3dadf;
+            border-radius: 50%;
+            margin-top: 40px;
+            margin-left: 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+        }
+
+        .viagens {
+            text-align: left;
+            color: #043F2D;
+        }
+
+        .rectangle2 {
+            width: 370px; 
+            height: 135px; 
+            margin-top: 18px;
+            background-color: #d3dadf;
+            border-radius: 5%;
+            margin-left: 10px;
+            padding: 20px; /* espaço interno */
+        }
+
+        .rectangle2 p {
+            margin: 5px 0; /* espaço entre as linhas */
+            text-align: left; /* alinha na esquerda */
+            color: black;
+        }
+    </style>
+
+    <!-- Input de Galeria -->
+    <input type="file" accept="image/*" id="galleryInput" style="display: none;">
 </body>
 </html>
