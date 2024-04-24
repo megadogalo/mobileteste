@@ -6,9 +6,26 @@
     <link rel="stylesheet" href="styles.css">
     <title>Rideshare</title>
     <style>
-        /* Adicionei este estilo para esconder os botões por padrão */
-        #galeria, #camera {
+        /* Estilos para a janela modal */
+        .modal {
             display: none;
+            position: fixed;
+            z-index: 1;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgba(0, 0, 0, 0.4);
+        }
+
+        .modal-content {
+            background-color: #fefefe;
+            margin: 15% auto;
+            padding: 20px;
+            border: 1px solid #888;
+            width: 80%;
+            text-align: center;
         }
     </style>
 </head>
@@ -19,8 +36,7 @@
     <hr>
     <div class="container">
         <div class="circle" id="circle">
-            <button id="galeria">Galeria</button>
-            <button id="camera">Câmera</button>
+            <span id="openModal">Clique aqui para escolher</span>
         </div>
         <div class="info">
             <h2>Nome</h2>
@@ -61,20 +77,40 @@
         </div>
     </div>
 
+    <!-- Modal -->
+    <div id="myModal" class="modal">
+        <div class="modal-content">
+            <h2>Escolha uma opção</h2>
+            <button id="openGallery">Galeria</button>
+            <button id="openCamera">Câmera</button>
+        </div>
+    </div>
+
     <!-- JavaScript -->
     <script>
+        // Exibe o modal quando o usuário clica no círculo
         document.getElementById('circle').addEventListener('click', function() {
-            // Exibe os botões quando o círculo é clicado
-            document.getElementById('galeria').style.display = 'inline';
-            document.getElementById('camera').style.display = 'inline';
+            document.getElementById('myModal').style.display = 'block';
         });
 
-        document.getElementById('galeria').addEventListener('click', function() {
+        // Fecha o modal quando o usuário clica em qualquer lugar fora dele
+        window.onclick = function(event) {
+            var modal = document.getElementById('myModal');
+            if (event.target == modal) {
+                modal.style.display = "none";
+            }
+        };
+
+        // Ação ao clicar em "Galeria"
+        document.getElementById('openGallery').addEventListener('click', function() {
             alert("Abrindo galeria..."); // Código para abrir a galeria
+            document.getElementById('myModal').style.display = 'none'; // Fecha o modal
         });
 
-        document.getElementById('camera').addEventListener('click', function() {
+        // Ação ao clicar em "Câmera"
+        document.getElementById('openCamera').addEventListener('click', function() {
             alert("Abrindo câmera..."); // Código para abrir a câmera
+            document.getElementById('myModal').style.display = 'none'; // Fecha o modal
         });
     </script>
 </body>
